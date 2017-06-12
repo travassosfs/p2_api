@@ -10,7 +10,7 @@ module.exports = function(app,connection) {
 		+ "'";
 	  	console.log(queryVerify);
 		connection.query(queryVerify, function(erro, result){
-	  		if(result=="[]") {
+	  		if(result.length==0) {
 				var query = 
 				"INSERT INTO masters (numero, usuario, senha) VALUES ('"
 				+user.number+"','"+user.userName+"','"+user.pass+"');";
