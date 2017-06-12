@@ -4,13 +4,24 @@ module.exports = function(app,connection) {
 	//{"number":"12345678990","userName":"nomeDoUsuario","pass":"senha"}
 	app.post('/sirast/user', function(req, res){
 		var user = req.body;
-		var query = 
-		"INSERT INTO masters (numero, usuario, senha) VALUES ('"
-		+user.number+"','"+user.userName+"','"+user.pass+"');";
-	  	
-	  	connection.query(query, function(erro, result){
-			res.send(erro);
-		});
+
+		var queryVerify = 
+		"select * from masters where usuario = '" + user.userName
+		+ "'";
+	  	console.log(queryVerify);
+		connection.query(queryVerify, function(erro, result){
+	  		if(result=="[]") {
+				var query = 
+				"INSERT INTO masters (numero, usuario, senha) VALUES ('"
+				+user.number+"','"+user.userName+"','"+user.pass+"');";
+			  	console.log(query);
+			  	connection.query(query, function(erro, result){
+					res.send(erro);
+				});
+	  		} else {
+				res.send("{'erro':'Usuário já cadastrado'}");
+	  		}
+		});		
 	});
 
 	app.put('/sirast/login', function(req, res){
