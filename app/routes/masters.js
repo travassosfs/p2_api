@@ -16,7 +16,10 @@ module.exports = function(app,connection) {
 				+user.number+"','"+user.userName+"','"+user.pass+"');";
 			  	console.log(query);
 			  	connection.query(query, function(erro, result){
-					res.status(404).send(erro);
+			  		if(erro != "" && erro != null)
+						res.status(404).send(erro);
+					else
+						res.send(result);
 				});
 	  		} else {
 				res.status(404).send("{'erro':'Usuário já cadastrado'}");
