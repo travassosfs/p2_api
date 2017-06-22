@@ -34,8 +34,8 @@ module.exports = function(app,connection) {
 		+ "' AND senha = '" + user.pass + "'";
 	  	console.log(query);
 	  	connection.query(query, function(erro, result){
-	  		if(result==null) {
-				res.send(erro);
+	  		if(erro != "" && erro != null) {
+				res.status(404).send(erro);
 	  		}else {
 				res.send(result);
 	  		}
